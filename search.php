@@ -6,11 +6,12 @@
         <title>Tweetの検索結果</title>
     </head>
     <body>
-        <form name="input" action="search.php" method="get">
-            検索ワードを入力してください:
-            <input type="text" name="term"><br>
-            <input type="submit">
-        </form>
+        <div style="text-align:center">
+            <form name="input" action="search.php" method="get">
+                検索ワードを入力してください:
+                <input type="text" name="term"><br>
+                <input type="submit">
+            </form>
 
 <?php    
     /** DB接続設定(PDOを利用) */
@@ -45,6 +46,6 @@
         echo "処理を中断します。<br/>";
     }
 ?>
-
+        </div>
     </body>
 </html>
