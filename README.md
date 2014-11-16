@@ -1,9 +1,12 @@
 searchTweet
 ===========
 
-全文検索エンジンの作成サンプル
+PHPでつくる全文検索エンジン
 
-## Mecab等のセットアップ
+## etc
 
-MecabをEC2上にインストールする
+・Mecabのセットアップについて<br/>
 https://gist.github.com/masayuki5160/4ef3606257af9a1df1d4
+<br/><br/>
+・検索対象ドキュメントについて<br/>
+任意のキーワードをTwitterより取得した結果を検索対象としています。
