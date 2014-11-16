@@ -3,12 +3,12 @@ searchTweet
 
 全文検索エンジンの作成サンプル
 
-# Mecab等のセットアップ
+## Mecab等のセットアップ
 
 MecabをEC2上にインストールする
 https://gist.github.com/masayuki5160/4ef3606257af9a1df1d4
 
-# DB設計
+## DB設計
 
 CREATE DATABASE INVERTED_INDEX DEFAULT CHARACTER SET utf8;
 
