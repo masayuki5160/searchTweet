@@ -7,12 +7,13 @@
     </head>
     <body>
         <div style="text-align:center">
+            <h1>PHPでつくる全文検索エンジン</h1>
             <form name="input" action="search.php" method="get">
                 検索ワードを入力してください:
-                <input type="text" name="term"><br>
+                <input type="text" name="term">
                 <input type="submit">
             </form>
-
+        </div>
 <?php    
     /** DB接続設定(PDOを利用) */
     $dsn = 'mysql:dbname=INVERTED_INDEX;host=localhost;charset=utf8';
@@ -46,6 +47,5 @@
         echo "処理を中断します。<br/>";
     }
 ?>
-        </div>
     </body>
 </html>
