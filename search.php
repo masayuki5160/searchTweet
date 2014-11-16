@@ -1,3 +1,17 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Tweetの検索結果</title>
+    </head>
+    <body>
+        <form name="input" action="search.php" method="get">
+            検索ワードを入力してください:
+            <input type="text" name="term"><br>
+            <input type="submit">
+        </form>
+
 <?php    
     /** DB接続設定(PDOを利用) */
     $dsn = 'mysql:dbname=INVERTED_INDEX;host=localhost;charset=utf8';
@@ -23,9 +37,14 @@
             $getDocStmt->execute();
             $searchResult = $getDocStmt->fetchAll();
 
-            var_dump($searchResult);
+            foreach ($searchResult as $key => $value) {
+                echo $value["BODY"]."<br/><br/>";
+            }
         }
     }else{
         echo "処理を中断します。<br/>";
     }
 ?>
+
+    </body>
+</html>
