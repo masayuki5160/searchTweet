@@ -49,29 +49,34 @@
                 if( substr( $eachResult , 0 , 3 ) !== 'EOS' ){
                     list( $eachMorpheme , $eachInfo ) = explode( "\t" , $eachResult );                    
                     echo $eachMorpheme. "<br/>";
+                    
+                    $getFirstMorphemeInfo = explode(",", $eachInfo);
+                    echo "[check MorphemeInfo]".$getFirstMorphemeInfo[0]. "<br/>";
 
-                    $existCheckStmt = $dbh->prepare("SELECT * FROM tokens WHERE TOKEN = '". $eachMorpheme. "'");
-                    $existCheckStmt->execute();
-                    $existCheckResult = $existCheckStmt->fetchAll();
+                    if($getFirstMorphemeInfo[0] === "名詞"){
+                        $existCheckStmt = $dbh->prepare("SELECT * FROM tokens WHERE TOKEN = '". $eachMorpheme. "'");
+                        $existCheckStmt->execute();
+                        $existCheckResult = $existCheckStmt->fetchAll();
 
-                    if( empty($existCheckResult) ){
-                        $newInvertedIndex[$eachMorpheme] = array($documentID);
+                        if( empty($existCheckResult) ){
+                            $newInvertedIndex[$eachMorpheme] = array($documentID);
 
-                        // invertedIndexをDBへデータ追加
-                        $sql = "insert into tokens (TOKEN, DOCS_COUNT, POSTINGS) values (?, ?, ?)";
-                        $stmt = $dbh->prepare($sql);
-                        $stmt->execute(array($eachMorpheme, "1", $documentID));
-                    }else{
-                        if(isset($newInvertedIndex[$eachMorpheme])){
-                            // 同じドキュメント内ですでに登録されいるとき
-                        }else{
-                            $newPostings = $existCheckResult[0]["POSTINGS"]. ",". $documentID;
-                            $sql = "update tokens SET DOCS_COUNT = DOCS_COUNT + 1, POSTINGS = '". $newPostings 
-                                ."' WHERE ID =  ". $existCheckResult[0]["ID"];
+                            // invertedIndexをDBへデータ追加
+                            $sql = "insert into tokens (TOKEN, DOCS_COUNT, POSTINGS) values (?, ?, ?)";
                             $stmt = $dbh->prepare($sql);
-                            $stmt->execute();
+                            $stmt->execute(array($eachMorpheme, "1", $documentID));
+                        }else{
+                            if(isset($newInvertedIndex[$eachMorpheme])){
+                                // 同じドキュメント内ですでに登録されいるとき
+                            }else{
+                                $newPostings = $existCheckResult[0]["POSTINGS"]. ",". $documentID;
+                                $sql = "update tokens SET DOCS_COUNT = DOCS_COUNT + 1, POSTINGS = '". $newPostings 
+                                    ."' WHERE ID =  ". $existCheckResult[0]["ID"];
+                                $stmt = $dbh->prepare($sql);
+                                $stmt->execute();
 
-                            $newInvertedIndex[$eachMorpheme] = array($newPostings);
+                                $newInvertedIndex[$eachMorpheme] = array($newPostings);
+                            }
                         }
                     }
                 }else{
