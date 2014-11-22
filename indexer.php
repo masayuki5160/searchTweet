@@ -53,7 +53,7 @@
                     $getFirstMorphemeInfo = explode(",", $eachInfo);
                     echo "[check MorphemeInfo]".$getFirstMorphemeInfo[0]. "<br/>";
 
-                    if($getFirstMorphemeInfo[0] === "名詞"){
+                    if($getFirstMorphemeInfo[0] === "名詞" && !preg_match("/[!-\/:-?\[-`{-~]/", $eachMorpheme) ){
                         $existCheckStmt = $dbh->prepare("SELECT * FROM tokens WHERE TOKEN = '". $eachMorpheme. "'");
                         $existCheckStmt->execute();
                         $existCheckResult = $existCheckStmt->fetchAll();
